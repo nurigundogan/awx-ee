@@ -1,9 +1,8 @@
 FROM quay.io/ansible/ansible-runner:latest
 
-RUN dnf install -y \
+RUN apt install -y \
     python3-pip \
-    git \
-    && dnf clean all
+    git 
 
 COPY requirements.txt /tmp/requirements.txt
 RUN python3 -m pip install --upgrade pip \
@@ -14,8 +13,7 @@ RUN ansible-galaxy collection install -r /tmp/requirements.yml
 
 COPY bindep.txt /tmp/bindep.txt
 RUN if [ -f /tmp/bindep.txt ]; then \
-    dnf install -y $(cat /tmp/bindep.txt) \
-    && dnf clean all; \
+    apt install -y $(cat /tmp/bindep.txt) \
     fi
 
 WORKDIR /runner
