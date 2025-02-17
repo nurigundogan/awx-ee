@@ -1,1 +1,2 @@
-bind-utils
+gcc
+make
